@@ -55,11 +55,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // We either want up to every website, or only a limited subset number of sites
     let num_to_generate = args.count.unwrap_or(websites.len());
     // Try requesting each website over https
-    let client = Client::new();
+    let client = Client::builder().https_only(true).build()?;
     let https_hosts: Vec<String> = stream::iter(websites)
-        .map(|(_, host)| {
+        .map(|(rank, host)| {
             let client = &client;
             async move {
+                println!("Navigating to {host} {rank}/{num_to_generate}");
                 (
                     host.clone(),
                     client.get(format!("https://{host}")).send().await,

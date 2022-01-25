@@ -4,6 +4,7 @@ Often when gathering background traffic using selenium or other browser automati
 * The host may not support HTTPS, meaning you must navigate starting with the insecure HTTP version of the website. This also is detrimental if you only want HTTPS traffic
 * The host may be part of a larger hostname, and not meaningfully navigable by itself
 * The host may not even resolve
+* The host may fail https cert verification (in which case, the browser would just show a warning page)
 
 This program goes through a list and filters down to just websites where a `GET` request to `https://host` works.
 
